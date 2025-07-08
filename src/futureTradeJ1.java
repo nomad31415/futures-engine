@@ -250,6 +250,96 @@ public class RiskManagementService {
 
 
 
+@SpringBootApplication
+@EnableEurekaServer
+public class ServiceRegistryApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ServiceRegistryApplication.class, args);
+    }
+}
+
+
+///////////////////////////////
+
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}
+
+
+
+///////////////////////
+
+
+public class OrderEvent implements Serializable {
+    private String eventId;
+    private Order order;
+    private OrderEventType eventType;
+    private Instant timestamp;
+    // getters, setters, constructors
+}
+
+public class TradeEvent implements Serializable {
+    private String eventId;
+    private Trade trade;
+    private Instant timestamp;
+    // getters, setters, constructors
+}
+
+public class PriceUpdate implements Serializable {
+    private String symbol;
+    private BigDecimal bid;
+    private BigDecimal ask;
+    private BigDecimal last;
+    private Instant timestamp;
+    // getters, setters, constructors
+}
+
+
+//////////////////////////
+
+
+@Entity
+@Table(name = "orders")
+public class Order {
+    @Id
+    private String id;
+    private String accountId;
+    private String symbol;
+    private OrderType type;
+    private OrderSide side;
+    private BigDecimal price;
+    private BigDecimal quantity;
+    private OrderStatus status;
+    private Instant createdAt;
+    // getters, setters
+}
+
+@Entity
+@Table(name = "trades")
+public class Trade {
+    @Id
+    private String id;
+    private String symbol;
+    private BigDecimal price;
+    private BigDecimal quantity;
+    private String buyOrderId;
+    private String sellOrderId;
+    private Instant executedAt;
+    // getters, setters
+}
+
+
+///////////////////
+
+
+
+
+
 
 
 
